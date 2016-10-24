@@ -22,18 +22,27 @@ This package works with all Oracle versions above 9i and all editions.
 
 1. Run the procedure pkg_idx_compress.idx_compress_analyze to calculate the optimal compression ratio and prefix count for every index in the specified schema. Example:
 
-	-- Analyse optimal prefix count and expected compression percent for all indexes in the HR schema
-	exec pkg_idx_compress.idx_compress_analyze(pOwner => 'HR');
+```plsql
+-- Analyse optimal prefix count and expected compression percent for all indexes in the HR schema
+exec pkg_idx_compress.idx_compress_analyze(pOwner => 'HR');
+```
 
 2. [optional] Query the GTT_INDEX_STATS table to check the analysis results:
 - The column opt_cmpr_count indicates the number of prefix columns that will be compressed.
 - The column opt_cmpr_pctsave indicates the expected percent savings in storage that will be achieved with the recommended prefix compression.
 
+```sql
+-- Show analysis results
+SELECT OWNER, NAME, OPT_CMPR_COUNT, OPT_CMPR_PCTSAVE FROM GTT_INDEX_STATS;
+```
+
 3. Run the idx_compress_execute procedure to perform the compression with the recommended prefix count. You can optionally inform a minimal percent saving that will trigger the compression with the parameter pPctSave (defaults to 10 percent). Also, you can optionally ask Oracle to perform the index rebuild online specifying pOnline = true. Example:
 
-	-- Compress all indexes with expected savings equal or above 15 percent
-	-- and perform the rebuild online
-	exec pkg_idx_compress.idx_compress_execute(pPctSave => 15, pOnline => true);
+```plsql
+-- Compress all indexes with expected savings equal or above 15 percent
+-- and perform the rebuild online
+exec pkg_idx_compress.idx_compress_execute(pPctSave => 15, pOnline => true);
+```
 
 # Notes
 
