@@ -24,7 +24,7 @@
   Installation:
   1. Create the global temporary table GTT_INDEX_STATS as specified below.
   2. Compile package header
-  3. Compile package specification
+  3. Compile package body
 
   Usage:
   1. Run the procedure pkg_idx_compress.idx_compress_analyze to calculate the
